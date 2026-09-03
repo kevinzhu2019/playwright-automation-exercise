@@ -6,7 +6,6 @@ export class LoginPage {
 
     constructor(page: Page) {
         this.page = page;
-
         this.loginBtn = page.locator("//a[@href='/login']");
     }
 

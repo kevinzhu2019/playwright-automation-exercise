@@ -88,5 +88,6 @@ export class RegisterInfoPage {
 
     async clcikCreateBtn() {
         await this.createAccountBtn.click();
+        await this.accountCreated.waitFor({ timeout: 5000 });
     }
 }
