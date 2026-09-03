@@ -26,7 +26,8 @@ export class RegisterInfoPage {
     private readonly createAccountBtn: Locator;
     private readonly subscriptionEmail: Locator;
     private readonly subscribeBtn: Locator;
-    private readonly accountCreated: Locator;
+    public readonly accountCreated: Locator;
+    private readonly continueBtn: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -59,6 +60,7 @@ export class RegisterInfoPage {
         this.subscribeBtn = page.locator("//button[@id='subscribe']");
 
         this.accountCreated = page.locator("//b[text()='Account Created!']");
+        this.continueBtn = page.locator("//a[@data-qa='continue-button']");
     }
 
     async enterAccountInfo(sex: string, name: string, password: string, dob: string, newsletter: string, specialOffer: string) {
@@ -89,6 +91,9 @@ export class RegisterInfoPage {
 
     async clcikCreateBtn() {
         await this.createAccountBtn.click();
-        await this.accountCreated.waitFor({ timeout: 5000 });
+    }
+
+    async clickContinueBtn() {
+        await this.continueBtn.click();
     }
 }
