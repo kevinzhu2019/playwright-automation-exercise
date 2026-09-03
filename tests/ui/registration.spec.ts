@@ -19,7 +19,7 @@ test('Register new user', async ({ page }) => {
     await registerPage.signup('Kai' + currentDate, TestUtils.generateRandomString(6) + '@gmail99.com');
 
     // Fill in the account information
-    await registerInfoPage.enterAccountInfo('Male', 'Kai', '123456', '01-01-1990', 'Yes', 'Yes');
+    await registerInfoPage.enterAccountInfo('Male', 'Kai', '123456', '1-1-1990', 'Yes', 'Yes');
     await registerInfoPage.enterAddressInfo('Kai', 'Smith', 'Company', '123 Main St', 'Apt 4B', 'United States', 'California', 'Los Angeles', '90001', '1234567890');
     await registerInfoPage.clcikCreateBtn();
 })

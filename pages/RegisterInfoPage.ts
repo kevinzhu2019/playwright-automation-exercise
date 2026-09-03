@@ -82,6 +82,7 @@ export class RegisterInfoPage {
         await this.address2Input.fill(address2);
         await this.countrySelect.selectOption(country);
         await this.stateInput.fill(state);
+        await this.cityInput.fill(city);
         await this.zipInput.fill(zip);
         await this.mobileInput.fill(mobile);
     }
