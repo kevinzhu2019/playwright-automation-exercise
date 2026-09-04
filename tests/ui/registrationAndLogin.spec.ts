@@ -27,6 +27,7 @@ test('Register new user', async ({ page }) => {
     await registerInfoPage.clcikCreateBtn();
     // Wait for the account created confirmation message to appear
     await registerInfoPage.accountCreated.waitFor({ timeout: 5000 });
+    await registerInfoPage.clickContinueBtn();
 
     // logout and verify that the user is logged out
     await logoutPage.clickLogoutBtn();
