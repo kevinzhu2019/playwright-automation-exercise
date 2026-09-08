@@ -14,6 +14,6 @@ test('Verify that the user can navigate to the products page', async ({ page }) 
 
     // Navigate to the products page
     await productsPage.gotoProductsPage();
-
+    
 
 })
