@@ -8,6 +8,7 @@ export class ProductsPage {
     public readonly searchBtn: Locator;
     public readonly leftSideBarCat: Locator;
     public readonly leftSideBarBrands: Locator;
+    public readonly allProducts: Locator;
     public readonly catWomanDress: Locator;
     public readonly catWomanTops: Locator;
     public readonly catWomanSaree: Locator;
@@ -24,6 +25,7 @@ export class ProductsPage {
         this.searchBtn = page.locator("//button[@id='submit_search']");
         this.leftSideBarCat = page.locator("//div[@class='left-sidebar']//h2[normalize-space()='Category']");
         this.leftSideBarBrands = page.locator("//div[@class='left-sidebar']//h2[normalize-space()='Brands']");
+        this.allProducts = page.locator("//div[@class='features_items']//h2[normalize-space()='All Products']");
         this.catWomanDress = page.locator("//div[@id='Women']//a[text()='Dress ']");
         this.catWomanTops = page.locator("//div[@id='Women']//a[text()='Tops ']");
         this.catWomanSaree = page.locator("//div[@id='Women']//a[text()='Saree ']");
