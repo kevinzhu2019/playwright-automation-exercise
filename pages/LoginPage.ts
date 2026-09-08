@@ -4,11 +4,13 @@ export class LoginPage {
     private readonly page: Page;
     private readonly loginBtn: Locator;
     public readonly logoutBtn: Locator;
+    public readonly loggedInUser: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.loginBtn = page.locator("//a[@href='/login']");
         this.logoutBtn = page.locator("//a[@href='/logout']");
+        this.loggedInUser = page.locator("//div[@data-qa='logged-in-user']");
     }
 
     async open(): Promise<void> {
