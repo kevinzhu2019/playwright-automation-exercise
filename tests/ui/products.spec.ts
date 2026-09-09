@@ -39,4 +39,24 @@ test('Verify that the user can navigate to the products page', async ({ page }) 
     await expect(productsPage.catKidsDress).toBeVisible();
     await expect(productsPage.catKidsTopsShirts).toBeVisible();
 
+    // Verify Brands list
+    await expect(productsPage.brands).toBeVisible();
+    await expect(productsPage.brandPolo).toBeVisible();
+    await expect(productsPage.brandHM).toBeVisible();
+    await expect(productsPage.brandMadame).toBeVisible();
+    await expect(productsPage.brandMH).toBeVisible();
+    await expect(productsPage.brandBabyHug).toBeVisible();
+    await expect(productsPage.brandAllenSollyJr).toBeVisible();
+    await expect(productsPage.brandKookieKids).toBeVisible();
+    await expect(productsPage.brandBiba).toBeVisible();
+
+    // Verify Brand list number - Polo
+    await productsPage.clickOnBrand("Polo");
+    const poloListNo = await productsPage.getProductsListNo("Polo");
+    await expect(productsPage.brandProductsListNo).toHaveCount(poloListNo);
+    // Verify brand list number - H&M
+    await productsPage.clickOnBrand("H&M");
+    const hmListNo = await productsPage.getProductsListNo("H&M");
+    await expect(productsPage.brandProductsListNo).toHaveCount(hmListNo);
+
 })
