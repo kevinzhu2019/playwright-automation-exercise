@@ -34,6 +34,8 @@ test('Verify products details page.', async({page}) => {
                 await expect(productsDetailsPage.condition).toHaveText(product.condition);
                 // Verify product brand
                 await expect(productsDetailsPage.brand).toContainText(product.brand);
+                // Navigate back to product list page
+                await productsPage.gotoProductsPage();
             });
     }
 })
