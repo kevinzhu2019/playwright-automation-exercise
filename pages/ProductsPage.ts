@@ -85,7 +85,7 @@ export class ProductsPage {
     }
 
     //Verify products category expansion button
-    async verifyCategoryExpansion(catName: string) {
+    async clickCategoryExpansion(catName: string) {
         const catExpendBtn = this.page.locator(`//a[@href='#${catName}']//i`);
         await catExpendBtn.click(); 
     }
@@ -101,6 +101,12 @@ export class ProductsPage {
         const locator = this.page.locator(`//div[@class='brands-name']/ul/li/a[text()='${product}']/span`);
         const returnStr = await locator.allInnerTexts();
         return Number(returnStr[1]);
+    }
+
+    // Navigate to products details page
+    async navToProductDetail(product: string) {
+        const locator = this.page.locator(`//p[normalize-space()='${product}']/ancestor::div[@class='single-products']/following-sibling::div[@class='choose']//a`);
+        await locator.click();
     }
 
 }
