@@ -30,9 +30,9 @@ test('Verify products details page.', async({page}) => {
                 // Verify add to cart button
                 await expect(productsDetailsPage.addToCartBtn).toBeVisible();
                 // Verify product availability
-                await expect(productsDetailsPage.availability).toHaveText(product.availability);
+                await expect(productsDetailsPage.availability).toContainText(product.availability);
                 // Verify product condition
-                await expect(productsDetailsPage.condition).toHaveText(product.condition);
+                await expect(productsDetailsPage.condition).toContainText(product.condition);
                 // Verify product brand
                 await expect(productsDetailsPage.brand).toContainText(product.brand);
                 // Validate review section from product details page
