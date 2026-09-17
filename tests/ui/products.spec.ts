@@ -1,20 +1,24 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from '../../pages/ProductsPage';
+import { HomePage } from '../../pages/HomePage';
+import brandsData from '../../test-data/brands.json';
+import usersData from '../../test-data/users.json';
 
 test('Verify that the user can navigate to the products page', async ({ page }) => {
     // Login with a valid user account
     const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
+    const homePage = new HomePage(page);
 
     // Login to the website and navigate to products page
     await test.step("Login to the website and navigate to products page.", async() => {
         await loginPage.open();
         await loginPage.gotoLoginPage();
-        await loginPage.login('kkk1234567@gmail99.com', '1234567');
+        await loginPage.login(usersData[0].email, usersData[0].password);
         await expect(loginPage.loggedInUser).toBeVisible();
         // Navigate to the products page
-        await productsPage.gotoProductsPage();
+        await homePage.gotoTopBannerPage("Products");
     })
     
     // Verify UI
@@ -66,17 +70,7 @@ test('Verify that the user can navigate to the products page', async ({ page }) 
     })
     
     // Verify each Brand list number
-    const brands = [
-        "Polo",
-        "H&M",
-        "Madame",
-        "Mast & Harbour",
-        "Babyhug",
-        "Allen Solly Junior",
-        "Kookie Kids",
-        "Biba"
-    ];
-    for (const brand of brands) {
+    for (const brand of brandsData) {
         await test.step(`Verify product count for brand: ${brand}`, async() => {
             await productsPage.clickOnBrand(brand);
             const expectedCount = await productsPage.getProductsListNo(brand);

@@ -2,7 +2,6 @@ import { type Locator, type Page } from "@playwright/test";
 
 export class ProductsPage {
     private readonly page: Page;
-    private readonly productsHeader: Locator;
     public readonly onSale: Locator;
     public readonly searchInput: Locator;
     public readonly searchBtn: Locator;
@@ -36,9 +35,11 @@ export class ProductsPage {
     public readonly brandBibaNo: Locator;
     public readonly brandProductsListNo: Locator;
 
+    public readonly productAddedModal: Locator
+    public readonly continueShoppingBtnModal: Locator;
+
     constructor(page: Page) {
         this.page = page;
-        this.productsHeader = page.locator('//a[@href="/products"]');
         this.onSale = page.locator("//img[@src='/static/images/shop/sale.jpg']");
         this.searchInput = page.locator("//input[@id='search_product']");
         this.searchBtn = page.locator("//button[@id='submit_search']");
@@ -78,10 +79,8 @@ export class ProductsPage {
         this.brandBiba = page.locator(biba);
         this.brandBibaNo = page.locator(biba + "/span");
         this.brandProductsListNo = page.locator("//div[@class='features_items']//div[@class='single-products']");
-    }
-
-    async gotoProductsPage() {
-        await this.productsHeader.click();
+        this.productAddedModal = page.locator("//div[@id='cartModal']//h4[normalize-space()='Added!']");
+        this.continueShoppingBtnModal = page.locator("//div[@id='cartModal']//button[normalize-space()='Continue Shopping']");
     }
 
     //Verify products category expansion button
@@ -105,8 +104,20 @@ export class ProductsPage {
 
     // Navigate to products details page
     async navToProductDetail(product: string) {
-        const locator = this.page.locator(`//p[normalize-space()='${product}']/ancestor::div[@class='single-products']/following-sibling::div[@class='choose']//a`);
-        await locator.click();
+        const productLink = this.page.locator(`//p[normalize-space()='${product}']/ancestor::div[@class='single-products']/following-sibling::div[@class='choose']//a`);
+        await productLink.click();
+    } // end method
+
+    // Hover mouse to product
+    async hoverToProduct(product: string) {
+        const productlink = this.page.locator(`//p[normalize-space()='${product}']/parent::div[@class='productinfo text-center']`);
+        await productlink.hover();
+    } // end method
+
+    // Add product to cart
+    async addProductToCart(productName: string) {
+        const overlayAddtoCartBtn = this.page.locator(`//div[@class='overlay-content']/p[text()='${productName}']/parent::div/a[text()='Add to cart']`);
+        await overlayAddtoCartBtn.click();
     }
 
 }

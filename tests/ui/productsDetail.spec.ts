@@ -2,21 +2,24 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { ProductsDetailsPage } from '../../pages/ProductsDetailsPage';
+import { HomePage } from '../../pages/HomePage';
 import { TestUtils } from '../../utils/TestUtils';
 import productsData from '../../test-data/products.json';
+import usersData from '../../test-data/users.json';
 
 test('Verify products details page.', async({page}) => {
     const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const productsDetailsPage = new ProductsDetailsPage(page);
+    const homePage = new HomePage(page);
 
     // Login to the website and navigate to products page
     await test.step("Login to the website and navigate to products page.", async() => {
         await loginPage.open();
         await loginPage.gotoLoginPage();
-        await loginPage.login('kkk1234567@gmail99.com', '1234567');
+        await loginPage.login(usersData[0].email, usersData[0].password);
         // Navigate to the products page
-        await productsPage.gotoProductsPage();
+        await homePage.gotoTopBannerPage("Products");
     })
 
     // Verify products detail info and review function
@@ -44,7 +47,7 @@ test('Verify products details page.', async({page}) => {
                 await expect(productsDetailsPage.reviewSuccessfulMsg).toBeVisible();
                 await expect(productsDetailsPage.reviewSuccessfulMsg).not.toBeVisible();
                 // Navigate back to product list page
-                await productsPage.gotoProductsPage();
+                await homePage.gotoTopBannerPage("Products");
             });
     }
 })
