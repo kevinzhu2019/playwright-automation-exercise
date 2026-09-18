@@ -1,6 +1,24 @@
 [
     {
         "email": "kkk1234567@gmail99.com",
-        "password": "1234567"
+        "password": "1234567",
+        "deliveryLastname": "Mr. a a",
+        "deliveryAddr1": "a",
+        "deliveryAddr2": "12dsfgdfrg",
+        "deliveryAddr3": "",
+        "deliveryCity": "Richmond Hill",
+        "deliveryProvince": "ON",
+        "deliveryPostalcode": "L1L2L3",
+        "deliveryCountry": "Canada",
+        "deliveryPhone": "123654789",
+        "invoiceLastname": "Mr. a a",
+        "invoiceAddr1": "a",
+        "invoiceAddr2": "12dsfgdfrg",
+        "invoiceAddr3": "",
+        "invoiceCity": "Richmond Hill",
+        "invoiceProvince": "ON",
+        "invoicePostalcode": "L1L2L3",
+        "invoiceCountry": "Canada",
+        "invoicePhone": "123654789"
     }
 ]
