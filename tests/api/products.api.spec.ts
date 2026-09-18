@@ -24,9 +24,9 @@ test ('Get all products list.', async({ request }) => {
     const product = responseBody.products.find(
         (product: any) => product.name === 'Blue Top'
     );
-    expect(product).toBeDefined();
 
     // 5. Verify specific object
+    expect(product).toBeDefined();
     expect(product.id).toBe(1);
     expect(product.name).toBe('Blue Top');
     expect(product.price).toBe('Rs. 500');

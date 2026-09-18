@@ -104,19 +104,25 @@ export class ProductsPage {
 
     // Navigate to products details page
     async navToProductDetail(product: string) {
-        const productLink = this.page.locator(`//p[normalize-space()='${product}']/ancestor::div[@class='single-products']/following-sibling::div[@class='choose']//a`);
+        const productLink = this.page.locator(
+            `//p[normalize-space()='${product}']/ancestor::div[@class='single-products']/following-sibling::div[@class='choose']//a`
+        );
         await productLink.click();
     } // end method
 
     // Hover mouse to product
     async hoverToProduct(product: string) {
-        const productlink = this.page.locator(`//p[normalize-space()='${product}']/parent::div[@class='productinfo text-center']`);
+        const productlink = this.page.locator(
+            `//p[normalize-space()='${product}']/parent::div[@class='productinfo text-center']`
+        );
         await productlink.hover();
     } // end method
 
     // Add product to cart
     async addProductToCart(productName: string) {
-        const overlayAddtoCartBtn = this.page.locator(`//div[@class='overlay-content']/p[text()='${productName}']/parent::div/a[text()='Add to cart']`);
+        const overlayAddtoCartBtn = this.page.locator(
+            `//div[@class='overlay-content']/p[text()='${productName}']/parent::div/a[text()='Add to cart']`
+        );
         await overlayAddtoCartBtn.click();
     }
 
