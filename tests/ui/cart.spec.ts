@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { HomePage } from '../../pages/HomePage';
 import { CartPage } from '../../pages/CartPage';
@@ -7,16 +6,8 @@ import usersData from '../../test-data/users.json';
 import productsAddToCartData from '../../test-data/productsAddToCart.json';
 
 test('Verify cart page.', async({page}) => {
-    const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const homePage = new HomePage(page);
-
-    // Login to page with valid credential
-    await test.step("Login to page with valid credential.", async() => {
-        await loginPage.open();
-        await loginPage.gotoLoginPage();
-        await loginPage.login(usersData[0].email, usersData[0].password);
-    })
 
     // Verify product overlay and then add product to cart
     for (const product of productsAddToCartData) {

@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { ProductsDetailsPage } from '../../pages/ProductsDetailsPage';
 import { HomePage } from '../../pages/HomePage';
@@ -8,16 +7,12 @@ import productsData from '../../test-data/products.json';
 import usersData from '../../test-data/users.json';
 
 test('Verify products details page.', async({page}) => {
-    const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const productsDetailsPage = new ProductsDetailsPage(page);
     const homePage = new HomePage(page);
 
     // Login to the website and navigate to products page
     await test.step("Login to the website and navigate to products page.", async() => {
-        await loginPage.open();
-        await loginPage.gotoLoginPage();
-        await loginPage.login(usersData[0].email, usersData[0].password);
         // Navigate to the products page
         await homePage.gotoTopBannerPage("Products");
     })

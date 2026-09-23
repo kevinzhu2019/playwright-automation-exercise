@@ -5,6 +5,14 @@ import { RegisterPage } from '../../pages/RegisterPage';
 import { RegisterInfoPage } from '../../pages/RegisterInfoPage';
 import { TestUtils } from '../../utils/TestUtils';
 
+// Override StorageState since this registration tests
+test.use({
+    storageState: {
+        cookies: [],
+        origins: []
+    }
+});
+
 test('Register new user', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const registerPage = new RegisterPage(page);

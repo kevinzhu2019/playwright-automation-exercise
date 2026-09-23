@@ -10,7 +10,7 @@ export class LoginPage {
         this.page = page;
         this.loginBtn = page.locator("//a[@href='/login']");
         this.logoutBtn = page.locator("//a[@href='/logout']");
-        this.loggedInUser = page.locator("//div[@data-qa='logged-in-user']");
+        this.loggedInUser = page.locator("//a[contains(text(),' Logged in as ')]");
     }
 
     async open(): Promise<void> {

@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/LoginPage';
 import { HomePage } from '../../pages/HomePage';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { CartPage } from '../../pages/CartPage';
@@ -8,7 +7,6 @@ import usersData from '../../test-data/users.json';
 import productsAddToCartData from '../../test-data/productsAddToCart.json';
 
 test('Test checkout function.', async({ page }) => {
-    const loginPage = new LoginPage(page);
     const homePage = new HomePage(page);
     const productsPage = new ProductsPage(page);
     const cartPage = new CartPage(page);
@@ -16,9 +14,6 @@ test('Test checkout function.', async({ page }) => {
 
     // Login to the website and navigate to products page
     await test.step("Login to the website and navigate to products page.", async() => {
-        await loginPage.open();
-        await loginPage.gotoLoginPage();
-        await loginPage.login(usersData[0].email, usersData[0].password);
         // Navigate to the products page
         await homePage.gotoTopBannerPage("Products");
     })
