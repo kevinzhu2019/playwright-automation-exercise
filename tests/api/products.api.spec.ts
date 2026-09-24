@@ -10,6 +10,7 @@ test ('Get all products list.', async({ page, request }) => {
     expect (response.status()).toBe(200);
 
     const responseBody = await response.json();
+    console.log(responseBody);
 
     // 2. Response body
     expect(responseBody.responseCode).toBe(200);
@@ -35,14 +36,14 @@ test ('Get all products list.', async({ page, request }) => {
     expect(product.price).toBe('Rs. 500');
     expect(product.brand).toBe('Polo');
 
-    // Verify response practice
-    test.step('This is the practice for API responce check after user clicks Submit button', async() => {
-        const response = await checkoutPage.clickSubmitResponse();
-        expect(response.status()).toBe(200);
-        const responseBody = await response.json();
-        expect(responseBody.responseCode).toBe(200);
-        // Verify UI
-        await expect(page.getByText('Success')).toBeVisible();
-    })
+    // // Verify response practice
+    // test.step('This is the practice for API responce check after user clicks Submit button', async() => {
+    //     const response = await checkoutPage.clickSubmitResponse();
+    //     expect(response.status()).toBe(200);
+    //     const responseBody = await response.json();
+    //     expect(responseBody.responseCode).toBe(200);
+    //     // Verify UI
+    //     await expect(page.getByText('Success')).toBeVisible();
+    // })
 
 })

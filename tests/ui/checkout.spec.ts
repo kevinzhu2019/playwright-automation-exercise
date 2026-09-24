@@ -6,6 +6,10 @@ import { CheckoutPage } from '../../pages/CheckoutPage';
 import usersData from '../../test-data/users.json';
 import productsAddToCartData from '../../test-data/productsAddToCart.json';
 
+test.beforeEach('This test will be executed before each test.', async({page}) => {
+    // place holder
+})
+
 test('Test checkout function.', async({ page }) => {
     const homePage = new HomePage(page);
     const productsPage = new ProductsPage(page);
