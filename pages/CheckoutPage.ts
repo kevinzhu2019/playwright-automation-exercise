@@ -1,4 +1,4 @@
-import { type Locator, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 
 export class CheckoutPage {
     private page: Page;
@@ -73,4 +73,17 @@ export class CheckoutPage {
     async clickPlaceOrderBtn() {
         await this.placeOrderBtn.click();
     }
+
+    // practice
+    async clickSubmitResponse() {
+        const responsePromise = this.page.waitForResponse(
+            response => response.url().includes('/api/submit') && 
+            response.request().method() === 'POST'
+        );
+        // Click submit button
+        await this.page.getByRole('button', { name: 'Submit'}).click();
+
+        return await responsePromise;
+    }
+    
 }
