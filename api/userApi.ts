@@ -1,4 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
+import { User } from '../types/User';
 
 export class UserApi {
 
@@ -9,7 +10,7 @@ export class UserApi {
     }
 
     // Post User
-    async createUser(userData: any) {
+    async createUser(userData: User) {
         const response = await this.request.post('https://automationexercise.com/api/createAccount', {
             form: userData
         });
@@ -29,7 +30,7 @@ export class UserApi {
     }
 
     // Update User
-    async updateUser(userData: any) {
+    async updateUser(userData: User) {
         const putResponse = await this.request.put('https://automationexercise.com/api/updateAccount', {
             form: userData
         });
