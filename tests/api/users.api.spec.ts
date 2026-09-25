@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { UserApi } from '../../api/userApi';
 
 test.use({
     storageState: {
@@ -8,6 +9,8 @@ test.use({
 })
 
 test('Verify new user creation, update, verify and delete.', async({ request }) => {
+
+    const userApi = new UserApi(request);
 
     const email = `kai_api_${Date.now()}gmail99.com`;
     const userData = {
@@ -38,9 +41,7 @@ test('Verify new user creation, update, verify and delete.', async({ request }) 
 
     await test.step('Create valid user first.', async() => {
         // Create user first
-        const firstResponse = await request.post('https://automationexercise.com/api/createAccount', {
-            form: userData
-        });
+        const firstResponse = await userApi.createUser(userData);
         
         const firstBody = await firstResponse.json();
 
@@ -50,9 +51,7 @@ test('Verify new user creation, update, verify and delete.', async({ request }) 
     
     await test.step('Test the duplicated user.', async() => {
         // Try to create the same user again
-        const duplicatedResponse = await request.post('https://automationexercise.com/api/createAccount', {
-            form: userData
-        });
+        const duplicatedResponse = await userApi.createUser(userData);
 
         const duplicatedBody = await duplicatedResponse.json();
 
@@ -64,11 +63,7 @@ test('Verify new user creation, update, verify and delete.', async({ request }) 
     })
 
     await test.step('Test get user details by email.', async() => {
-        const getResponse = await request.get('https://automationexercise.com/api/getUserDetailByEmail', {
-            params: {
-                email: email
-            }
-        });
+        const getResponse = await userApi.getUser(email);
 
         console.log("Get user by email, get response status: ", getResponse.status());
         const getBody = await getResponse.json();
@@ -87,9 +82,7 @@ test('Verify new user creation, update, verify and delete.', async({ request }) 
     })
 
     await test.step('Test update existing user profile.', async() => {
-        const putResponse = await request.put('https://automationexercise.com/api/updateAccount', {
-            form: updatedUserData
-        });
+        const putResponse = await userApi.updateUser(updatedUserData);
 
         const putResponseData = await putResponse.json();
         console.log('Updated response JSON: ', putResponseData);
@@ -102,11 +95,7 @@ test('Verify new user creation, update, verify and delete.', async({ request }) 
     })
 
     await test.step('Verify the user is actually updated.', async() => {
-        const updatedResponse = await request.get('https://automationexercise.com/api/getUserDetailByEmail', {
-            params: {
-                email: email
-            }
-        });
+        const updatedResponse = await userApi.getUser(email);
 
         const updatedResponseData = await updatedResponse.json();
 
@@ -119,12 +108,7 @@ test('Verify new user creation, update, verify and delete.', async({ request }) 
     })
 
     await test.step('Delete the new created user.', async() => {
-        const deleteResponse = await request.delete('https://automationexercise.com/api/deleteAccount', {
-            form: {
-                email: email,
-                password: userData.password
-            }
-        });
+        const deleteResponse = await userApi.deleteUser(email, updatedUserData.password);
 
         console.log("Delete user response: ", deleteResponse.status());
         expect(deleteResponse.status()).toBe(200);
