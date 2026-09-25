@@ -7,62 +7,34 @@ test.use({
     }
 })
 
-test.skip('Create a new user.', async({ request }) => {
-    const response = await request.post('https://automationexercise.com/api/createAccount', {
-        form: {
-            name: 'kai_api',
-            email: 'kai_api@gmail99.com',
-            password: 'ILoveChatGPT',
-            title: 'Mr',
-            birth_date: '1',
-            birth_month: '1',
-            birth_year: '1990',
-            firstname: 'Kai',
-            lastname: 'Smith',
-            company: 'Test Company',
-            address1: '123 Main St',
-            address2: 'Apt 4B',
-            country: 'Canada',
-            zipcode: 'L4J 1A1',
-            state: 'Ontario',
-            city: 'Vaughan',
-            mobile_number: '1234567890'
-        }
-    })
-
-    // Verify response status
-    console.log("Response status is: ", response.status());
-    expect(response.status()).toBe(200);
-
-    // verify response code from response JSON
-    const responseBody = await response.json();
-    console.log("Response body json is: ", responseBody);
-    expect(responseBody.responseCode).toBe(201);
-    expect(responseBody.message).toBe("User created!");
-})
-
-test('Verify duplicated email cannot be registered.', async({ request }) => {
+test('Verify new user creation, update, verify and delete.', async({ request }) => {
 
     const email = `kai_api_${Date.now()}gmail99.com`;
     const userData = {
-            name: 'kai_api',
-            email: email,
-            password: 'ILoveChatGPT',
-            title: 'Mr',
-            birth_date: '1',
-            birth_month: '1',
-            birth_year: '1990',
-            firstname: 'Kai',
-            lastname: 'Smith',
-            company: 'Test Company',
-            address1: '123 Main St',
-            address2: 'Apt 4B',
-            country: 'Canada',
-            zipcode: 'L4J 1A1',
-            state: 'Ontario',
-            city: 'Vaughan',
-            mobile_number: '1234567890'
-        };
+        name: 'kai_api',
+        email: email,
+        password: 'ILoveChatGPT',
+        title: 'Mr',
+        birth_date: '1',
+        birth_month: '1',
+        birth_year: '1990',
+        firstname: 'Kai',
+        lastname: 'Smith',
+        company: 'Test Company',
+        address1: '123 Main St',
+        address2: 'Apt 4B',
+        country: 'Canada',
+        zipcode: 'L4J 1A1',
+        state: 'Ontario',
+        city: 'Vaughan',
+        mobile_number: '1234567890'
+    };
+
+    const updatedUserData = {
+        ...userData,
+        firstname: 'Kevin',
+        lastname: 'Zhu',
+    };
 
     await test.step('Create valid user first.', async() => {
         // Create user first
@@ -112,6 +84,38 @@ test('Verify duplicated email cannot be registered.', async({ request }) => {
         expect(getBody.user.first_name).toBe(userData.firstname);
         expect(getBody.user.country).toBe(userData.country);
 
+    })
+
+    await test.step('Test update existing user profile.', async() => {
+        const putResponse = await request.put('https://automationexercise.com/api/updateAccount', {
+            form: updatedUserData
+        });
+
+        const putResponseData = await putResponse.json();
+        console.log('Updated response JSON: ', putResponseData);
+
+        // Assertion
+        expect(putResponse.status()).toBe(200);
+        expect(putResponseData.responseCode).toBe(200);
+        expect(putResponseData.message).toBe('User updated!');
+
+    })
+
+    await test.step('Verify the user is actually updated.', async() => {
+        const updatedResponse = await request.get('https://automationexercise.com/api/getUserDetailByEmail', {
+            params: {
+                email: email
+            }
+        });
+
+        const updatedResponseData = await updatedResponse.json();
+
+        // Assertion
+        expect(updatedResponse.status()).toBe(200);
+        expect(updatedResponseData.responseCode).toBe(200);
+        expect(updatedResponseData.user.first_name).toBe(updatedUserData.firstname);
+        expect(updatedResponseData.user.last_name).toBe(updatedUserData.lastname);
+        
     })
 
     await test.step('Delete the new created user.', async() => {
