@@ -1,4 +1,4 @@
-import { type Locator, type Page } from "@playwright/test";
+import { type Locator, type Page, expect } from "@playwright/test";
 
 export class LogoutPage {
     private readonly page: Page;
@@ -13,6 +13,6 @@ export class LogoutPage {
 
     async clickLogoutBtn() {
         await this.logoutBtn.click();
-        await this.loginBtn.waitFor({ timeout: 5000 });
+        await expect(this.loginBtn).toBeVisible();
     }
 }                        
