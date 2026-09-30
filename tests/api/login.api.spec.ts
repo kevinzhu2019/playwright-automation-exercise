@@ -26,7 +26,7 @@ test('Verify Login API with user details.', async({ page, request }) => {
         expect(responseBody.message).toBe('User exists!');
     })
 
-    await test.step('Verify Login API with invalid user details.', async() => {
+    await test.step('Verify Login API with valid email and invalid password.', async() => {
         const response = await loginApi.verifyLogin(validEmail, invalidPassword);
         const responseBody = await response.json();
         console.log('response body with invalid user: ', responseBody);
