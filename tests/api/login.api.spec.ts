@@ -17,7 +17,10 @@ test('Verify Login API with user details.', async({ page, request }) => {
     const invalidPassword = 'invalidpassword';
 
     await test.step('Verify Login API with valid user details.', async() => {
-        const response = await loginApi.verifyLogin(validEmail, validPassword);
+        const response = await loginApi.verifyLogin({
+            email: validEmail,
+            password: validPassword
+        });
         const responseBody = await response.json();
         console.log('response body with valid user: ', responseBody);
         // Assert
@@ -27,7 +30,9 @@ test('Verify Login API with user details.', async({ page, request }) => {
     })
 
     await test.step('Verify Login API with valid email and invalid password.', async() => {
-        const response = await loginApi.verifyLogin(validEmail, invalidPassword);
+        const response = await loginApi.verifyLogin({
+            email: validEmail, 
+            password: invalidPassword});
         const responseBody = await response.json();
         console.log('response body with invalid user: ', responseBody);
         // Assert
@@ -37,7 +42,9 @@ test('Verify Login API with user details.', async({ page, request }) => {
     })
 
     await test.step('Verify Login API without email parameter.', async() => {
-        const response = await loginApi.verifyLogin(validPassword);
+        const response = await loginApi.verifyLogin({
+            password: validPassword
+        });
         const responseBody = await response.json();
         console.log('response body without email: ', responseBody);
         // Assert
@@ -47,7 +54,9 @@ test('Verify Login API with user details.', async({ page, request }) => {
     })
 
     await test.step('Verify Login API without password parameter.', async() => {
-        const response = await loginApi.verifyLogin(validEmail);
+        const response = await loginApi.verifyLogin({
+            email: validEmail
+        });
         const responseBody = await response.json();
         console.log('response body without password: ', responseBody);
         // Assert
