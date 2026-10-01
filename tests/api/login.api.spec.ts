@@ -35,4 +35,25 @@ test('Verify Login API with user details.', async({ page, request }) => {
         expect(responseBody.responseCode).toBe(404);
         expect(responseBody.message).toBe('User not found!');
     })
+
+    await test.step('Verify Login API without email parameter.', async() => {
+        const response = await loginApi.verifyLogin(validPassword);
+        const responseBody = await response.json();
+        console.log('response body without email: ', responseBody);
+        // Assert
+        expect(response.status()).toBe(200);
+        expect(responseBody.responseCode).toBe(400);
+        expect(responseBody.message).toBe('Bad request, email or password parameter is missing in POST request.');
+    })
+
+    await test.step('Verify Login API without password parameter.', async() => {
+        const response = await loginApi.verifyLogin(validEmail);
+        const responseBody = await response.json();
+        console.log('response body without password: ', responseBody);
+        // Assert
+        expect(response.status()).toBe(200);
+        expect(responseBody.responseCode).toBe(400);
+        expect(responseBody.message).toBe('Bad request, email or password parameter is missing in POST request.');
+    })
+
 })

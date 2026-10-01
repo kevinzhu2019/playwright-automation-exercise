@@ -8,12 +8,16 @@ export class LoginApi {
         this.request = request;
     }
 
-    async verifyLogin(email: string, password: string) {
+    async verifyLogin(email?: string, password?: string) {
+
+        const form: Record<string, string> = {};
+        if (email !== undefined)
+            form.email = email;
+        if (password !== undefined)
+            form.password = password;
+
         const response = await this.request.post('https://automationexercise.com/api/verifyLogin', {
-            form: {
-                email: email,
-                password: password
-            }
+            form
         });
         return response;
     }
