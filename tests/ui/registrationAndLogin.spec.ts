@@ -23,13 +23,13 @@ test('Register new user and logout and relogin with this new created user', asyn
     const currentDate = new Date().toISOString().split('T')[0];
     const email = TestUtils.generateRandomString(6) + '@gmail99.com';
 
-    test.step('Navigate to new user registration page', async() => {
+    await test.step('Navigate to new user registration page', async() => {
         // Navigate to new user registration page
         await loginPage.open();
         await loginPage.gotoLoginPage();
     })
 
-    test.step ('Create new user profile.', async() => {
+    await test.step ('Create new user profile.', async() => {
         // Fill in the registration name and email, then click the signup button
         await registerPage.signup('Kai' + currentDate, email);
 
@@ -42,13 +42,13 @@ test('Register new user and logout and relogin with this new created user', asyn
         await registerInfoPage.clickContinueBtn();
     })
     
-    test.step('Logout with new created user.', async() => {
+    await test.step('Logout with new created user.', async() => {
         // logout and verify that the user is logged out
         await logoutPage.clickLogoutBtn();
         await logoutPage.loginBtn.waitFor({ timeout: 5000 });
     })
     
-    test.step('Re-login with the new created user.', async () => {
+    await test.step('Re-login with the new created user.', async () => {
         //login with the newly created user and verify that the user is logged in
         await loginPage.login(email, '123456');
         await loginPage.logoutBtn.waitFor({ timeout: 5000 });
