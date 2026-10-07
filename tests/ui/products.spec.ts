@@ -43,6 +43,7 @@ test('Verify that the user can navigate to the products page', async ({ page }) 
         await test.step(`Verify Category expansion: ${category}`, async() => {
             TestUtils.closeAdPopup(page);
             await productsPage.clickCategoryExpansion(category);
+            TestUtils.closeAdPopup(page);
             if (category == "Women") {
                 await expect(productsPage.catWomanDress).toBeVisible();
                 await expect(productsPage.catWomanTops).toBeVisible();

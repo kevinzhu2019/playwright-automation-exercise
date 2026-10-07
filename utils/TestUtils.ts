@@ -18,22 +18,22 @@ export class TestUtils {
         // There could be multiple iframe DOMs exist
         const adFrames = page.locator("iframe[id^='aswift_']");
 
-        for (let i = 0; i < await adFrames.count(); i++) {
+        const frameCount = await adFrames.count();
+        for (let i = 0; i < frameCount; i++) {
             const closeBtn = adFrames
                 .nth(i)
                 .contentFrame()
                 .locator("//div[@id='ad_position_box']//div[@class='close-button']");
             try {
-            if (await closeBtn.isVisible({ timeout: 2000 })) {
-                await closeBtn.click();
-                console.log('Add popup is closed.')
-            } else
-                console.log('Ad popup is not visible.')
-            } catch (error) {
-                console.log('Error while checking ad popup: ', error)
+                if (await closeBtn.isVisible({ timeout: 2000 })) {
+                    await closeBtn.click();
+                    console.log('Add popup is closed.');
+                    return;
+                } else
+                    console.log('Ad popup is not visible.')
+            } catch {
+                console.log('Page does not have ad popup.')
             }
         }
-
-        
     }
 }

@@ -91,7 +91,7 @@ export class ProductsPage {
 
     // Click Brand
     async clickOnBrand(brand: string) {
-        const brandName = this.page.locator(`//div[@class='brands-name']/ul/li/a[text()='${brand}']`);
+        const brandName = this.page.locator(`//div[@class='brands-name']/ul/li/a[contains(normalize-space(), '${brand}')]`);
         await brandName.click();
     }
 
