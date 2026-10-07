@@ -1,4 +1,5 @@
 import { type Locator, type Page } from "@playwright/test";
+import { TestUtils } from "../utils/TestUtils";
 
 export class LoginPage {
     private readonly page: Page;
@@ -14,7 +15,8 @@ export class LoginPage {
     }
 
     async open(): Promise<void> {
-        await this.page.goto('/');
+        await this.page.goto('/', { waitUntil: 'domcontentloaded' });
+        await TestUtils.closeAdPopup(this.page);
     }
 
     async gotoLoginPage() {

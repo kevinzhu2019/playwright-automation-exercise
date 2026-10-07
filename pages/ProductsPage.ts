@@ -99,7 +99,8 @@ export class ProductsPage {
     async getProductsListNo(product: string): Promise<number> {
         const locator = this.page.locator(`//div[@class='brands-name']/ul/li/a[text()='${product}']/span`);
         const returnStr = await locator.allInnerTexts();
-        return Number(returnStr[1]);
+        console.log('Return String is: ', returnStr);
+        return Number(returnStr[0].slice(1, -1));
     }
 
     // Navigate to products details page

@@ -1,18 +1,24 @@
 import { test, expect } from '@playwright/test';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { HomePage } from '../../pages/HomePage';
+import { LoginPage } from '../../pages/LoginPage';
 import brandsData from '../../test-data/brands.json';
 import usersData from '../../test-data/users.json';
+import { TestUtils } from '../../utils/TestUtils';
 
 test('Verify that the user can navigate to the products page', async ({ page }) => {
     // Login with a valid user account
     const productsPage = new ProductsPage(page);
     const homePage = new HomePage(page);
+    const loginPage = new LoginPage(page);
 
     // Login to the website and navigate to products page
     await test.step("Login to the website and navigate to products page.", async() => {
         // Navigate to the products page
+        await loginPage.open();
+        await TestUtils.closeAdPopup(page);
         await homePage.gotoTopBannerPage("Products");
+        await TestUtils.closeAdPopup(page);
     })
     
     // Verify UI
@@ -35,6 +41,7 @@ test('Verify that the user can navigate to the products page', async ({ page }) 
     const categories = ["Women", "Men", "Kids"];
     for (const category of categories) {
         await test.step(`Verify Category expansion: ${category}`, async() => {
+            TestUtils.closeAdPopup(page);
             await productsPage.clickCategoryExpansion(category);
             if (category == "Women") {
                 await expect(productsPage.catWomanDress).toBeVisible();
@@ -67,7 +74,9 @@ test('Verify that the user can navigate to the products page', async ({ page }) 
     for (const brand of brandsData) {
         await test.step(`Verify product count for brand: ${brand}`, async() => {
             await productsPage.clickOnBrand(brand);
+            TestUtils.closeAdPopup(page);
             const expectedCount = await productsPage.getProductsListNo(brand);
+            console.log(`Expected count for brand ${brand} is: ${expectedCount}`);
             await expect(productsPage.brandProductsListNo).toHaveCount(expectedCount);
         })
     }

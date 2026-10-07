@@ -42,21 +42,29 @@ export default defineConfig({
     },
     {
         name: 'chromium',
-        use: { 
-                    ...devices['Desktop Chrome'], 
-                    storageState: 'playwright/.auth/user.json' 
-                },
+        use:{ 
+                ...devices['Desktop Chrome'], 
+                storageState: 'playwright/.auth/user.json' 
+            },
         dependencies: ['setup'],
     },
 
     {
         name: 'firefox',
-        use: { ...devices['Desktop Firefox'] },
+        use:{
+                ...devices['Desktop Firefox'], 
+                storageState: 'playwright/.auth/user.json' 
+            },
+        dependencies: ['setup']
     },
 
     {
         name: 'webkit',
-        use: { ...devices['Desktop Safari'] },
+        use: { 
+                ...devices['Desktop Safari'],
+                storageState: 'playwright/.auth/user.json'
+             },
+        dependencies: ['setup']
     },
 
     /* Test against mobile viewports. */
@@ -74,10 +82,14 @@ export default defineConfig({
     //   name: 'Microsoft Edge',
     //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
     // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
+    {
+      name: 'Google Chrome',
+      use: {
+                ...devices['Desktop Chrome'], 
+                storageState: 'playwright/.auth/user.json' 
+            },
+      dependencies: ['setup']
+    },
   ],
 
   /* Run your local dev server before starting the tests */
