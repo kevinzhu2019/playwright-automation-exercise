@@ -25,7 +25,7 @@ export class TestUtils {
                 .contentFrame()
                 .locator("//div[@id='ad_position_box']//div[@class='close-button']");
             try {
-                if (await closeBtn.isVisible({ timeout: 2000 })) {
+                if (await closeBtn.isVisible({ timeout: 3000 })) {
                     await closeBtn.click();
                     console.log('Add popup is closed.');
                     return;

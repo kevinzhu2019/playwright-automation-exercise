@@ -106,7 +106,7 @@ export class ProductsPage {
     // Navigate to products details page
     async navToProductDetail(product: string) {
         const productLink = this.page.locator(
-            `//p[normalize-space()='${product}']/ancestor::div[@class='single-products']/following-sibling::div[@class='choose']//a`
+            `//p[contains(normalize-space(),'${product}')]/ancestor::div[@class='single-products']/following-sibling::div[@class='choose']//a`
         );
         await productLink.click();
     } // end method
