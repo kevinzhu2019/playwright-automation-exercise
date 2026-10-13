@@ -51,6 +51,6 @@ test('Register new user and logout and relogin with this new created user', asyn
     await test.step('Re-login with the new created user.', async () => {
         //login with the newly created user and verify that the user is logged in
         await loginPage.login(email, '123456');
-        await loginPage.logoutBtn.waitFor({ timeout: 5000 });
+        await loginPage.logoutBtnTopBanner.waitFor({ timeout: 5000 });
     })
 });

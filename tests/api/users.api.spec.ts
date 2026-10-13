@@ -120,5 +120,18 @@ test('Verify new user creation, update, verify and delete.', async({ request }) 
         expect(deleteResponseData.message).toBe("Account deleted!");
         
     })
+
+    await test.step('Test deleted user cannot be reached.', async() => {
+        const getDeleteResponse = await userApi.getUser(email);
+
+        console.log("Get deleted user by email, get response status: ", getDeleteResponse.status());
+        const getBody = await getDeleteResponse.json();
+        console.log("GET Deleted Response body: ", getBody);
+
+        // Assertion
+        expect(getDeleteResponse.status()).toBe(200);
+        expect(getBody.responseCode).toBe(200);
+
+    })
     
 })
