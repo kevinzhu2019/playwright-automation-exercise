@@ -3,7 +3,6 @@ import { ProductsPage } from '../../pages/ProductsPage';
 import { HomePage } from '../../pages/HomePage';
 import { LoginPage } from '../../pages/LoginPage';
 import brandsData from '../../test-data/brands.json';
-import usersData from '../../test-data/users.json';
 import { TestUtils } from '../../utils/TestUtils';
 
 test('Verify that the user can navigate to the products page', async ({ page }) => {

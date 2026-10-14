@@ -1,4 +1,4 @@
-import { type Locator, type Page } from "@playwright/test";
+import { type Locator, type Page, expect } from "@playwright/test";
 
 export class ProductsPage {
     private readonly page: Page;
@@ -113,18 +113,58 @@ export class ProductsPage {
 
     // Hover mouse to product
     async hoverToProduct(product: string) {
-        const productlink = this.page.locator(
-            `//p[normalize-space()='${product}']/parent::div[@class='productinfo text-center']`
-        );
-        await productlink.hover();
+        const productCard = this.page.locator('.single-products').filter({
+            has: this.page.locator('.productinfo p', {
+                hasText: new RegExp(`^${product}$`)
+            })
+        });
+
+        await productCard.hover();
+
+        // use css selector
+        const overLay = productCard.locator('.product-overlay');
+
+        await expect(overLay).toBeVisible();
+
+        await expect.poll(async() => {
+            return await overLay.evaluate(el => 
+                el.getAnimations().every(animation => 
+                    animation.playState === 'finished'
+                )
+            );
+        }, {
+            timeout: 5000
+        }).toBe(true);
+
+        // const productLink = this.page.locator(
+        //     `//p[normalize-space()='${product}']/parent::div[@class='productinfo text-center']`
+        // );
+
+        // try{
+        //     await expect(productLink).toBeVisible({ timeout: 10000 });
+        //     await productLink.hover();
+        // } catch (error) {
+        //     console.log(`Product not found : ${product}`);
+        //     console.log(`Current URL: ${this.page.url()}`);
+        //     console.log(`Match elements: ${await productLink.count()}`);
+        //     console.log(
+        //         `Product text matches: ${
+        //             await this.page.getByText(product, { exact: true }).count()
+        //         }`
+        //     );
+        //     throw error
+        // }
+        
     } // end method
 
     // Add product to cart
     async addProductToCart(productName: string) {
         const overlayAddtoCartBtn = this.page.locator(
-            `//div[@class='overlay-content']/p[text()='${productName}']/parent::div/a[text()='Add to cart']`
+            `//div[@class='overlay-content'][p[normalize-space()='${productName}']]//a[contains(@class,'add-to-cart')]`
         );
+        await expect(overlayAddtoCartBtn).toBeVisible();
         await overlayAddtoCartBtn.click();
+        await expect(this.continueShoppingBtnModal).toBeVisible({ timeout: 10000 });
     }
 
 }

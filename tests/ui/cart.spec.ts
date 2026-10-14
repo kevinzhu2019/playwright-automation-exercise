@@ -14,7 +14,7 @@ test('Verify cart page.', async({page}) => {
         await test.step(`Verify overlay and add to cart for product - ${product.name}`, async() => {
             for (let i = 0; i < product.quantity; i++) {
                 // Move mouse to product
-                productsPage.hoverToProduct(product.name);
+                await productsPage.hoverToProduct(product.name);
                 // Verify product name, price and 'Add to Cart' button
                 const overlayProductName = page.locator(`//div[@class='overlay-content']/p[text()='${product.name}']`);
                 const priceLocator = page.locator(`//div[@class='overlay-content']/p[text()='${product.name}']/parent::div/p`);
@@ -22,7 +22,7 @@ test('Verify cart page.', async({page}) => {
                 await expect(overlayProductName).toBeVisible();
                 await expect(priceLocator).toHaveText(product.price);
                 await expect(overlayAddtoCartBtn).toBeVisible();
-                productsPage.addProductToCart(product.name);
+                await productsPage.addProductToCart(product.name);
                 // Verify Add to cart overlay
                 await expect(productsPage.productAddedModal).toBeVisible();
                 await productsPage.continueShoppingBtnModal.click();
@@ -32,7 +32,7 @@ test('Verify cart page.', async({page}) => {
     
     // Navigate to Cart page
     await test.step('Navigate to Cart page.', async() => {
-        homePage.gotoTopBannerPage("Cart");
+        await homePage.gotoTopBannerPage("Cart");
     })
     
     // Verify cart page
