@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/LoginPage';
 import userData from '../../test-data/users.json';
 
@@ -15,4 +15,5 @@ test('Login with valid credentials', async ({ page }) => {
     await loginPage.open();
     await loginPage.gotoLoginPage();
     await loginPage.login(userData[0].email, userData[0].password);
+    await expect(page).toHaveURL(/automationexercise.com/);
 });
