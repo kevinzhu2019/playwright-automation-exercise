@@ -20,4 +20,16 @@ export class ProductsApi {
         return await this.request.get('https://automationexercise.com/api/brandsList');
     }
 
+    async putAllBrandsApi() {
+        return await this.request.put('https://automationexercise.com/api/brandsList');
+    }
+
+    async postSearchProductsApi(content: string) {
+        return await this.request.post('https://automationexercise.com/api/searchProduct', {
+            form: {
+                search_product: content
+            }
+        });
+    }   
+
 }

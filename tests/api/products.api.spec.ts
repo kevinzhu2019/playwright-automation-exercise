@@ -18,12 +18,22 @@ test ('Verify Products and Brands API endpoint.', async({ page, request }) => {
         expect(responseBody.responseCode).toBe(200);
         // 3. Response data structure
         expect(Array.isArray(responseBody.products)).toBe(true);
-        expect(responseBody.products.length).toBeGreaterThan(0);
+        expect(responseBody.products.length).toBe(34);
         // 4. Actual product data
         expect(responseBody.products[0].id).toBe(1);
         expect(responseBody.products[0].name).toBe('Blue Top');
         expect(responseBody.products[0].price).toBe('Rs. 500');
         expect(responseBody.products[0].brand).toBe('Polo');
+
+        expect(responseBody.products[1].id).toBe(2);
+        expect(responseBody.products[1].name).toBe('Men Tshirt');
+        expect(responseBody.products[1].price).toBe('Rs. 400');
+        expect(responseBody.products[1].brand).toBe('H&M');
+
+        expect(responseBody.products[2].id).toBe(3);
+        expect(responseBody.products[2].name).toBe('Sleeveless Dress');
+        expect(responseBody.products[2].price).toBe('Rs. 1000');
+        expect(responseBody.products[2].brand).toBe('Madame');
         // 5. Verify specific object
         const product = responseBody.products.find(
             (product: any) => product.name === 'Blue Top'
@@ -114,6 +124,32 @@ test ('Verify Products and Brands API endpoint.', async({ page, request }) => {
         );
         expect(brand13).toBeDefined();
         expect(brand13.brand).toBe('Allen Solly Junior');
+    })
+
+    await test.step('Put to all brands list which is suppose to fail.', async() => {
+        const response = await productsApi.putAllBrandsApi();
+        expect(response.status()).toBe(200);
+        const responseBody = await response.json();
+        console.log('Put brands response body is: ', responseBody);
+        // Assertion
+        expect(responseBody.responseCode).toBe(405);
+        expect(responseBody.message).toBe('This request method is not supported.')
+    })
+
+    await test.step('Post to search products API.', async() => {
+        const response = await productsApi.postSearchProductsApi("Tshirt");
+        expect(response.status()).toBe(200);
+        const responseBody = await response.json();
+        console.log('Search products response body is: ', responseBody);
+        // Assertion
+        expect(responseBody.responseCode).toBe(200);
+        expect(responseBody.products.length).toBeGreaterThan(0)
+        // verify products name includes "Tshirt"
+        const product = responseBody.products.find(
+            (product: any) => product.name.includes("Tshirt")
+        );
+        expect(product).toBeDefined();
+        expect(product.name).toContain("Tshirt");
     })
 
     // // Verify response practice
