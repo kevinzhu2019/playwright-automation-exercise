@@ -152,6 +152,16 @@ test ('Verify Products and Brands API endpoint.', async({ page, request }) => {
         expect(product.name).toContain("Tshirt");
     })
 
+    await test.step('Post to search products API with no search product parameter.', async() => {
+        const response = await productsApi.postSearchProductsApiEmpty();
+        expect(response.status()).toBe(200);
+        const responseBody = await response.json();
+        console.log('Search products with empty keyword parameter response body is: ', responseBody);
+        // Assertion
+        expect(responseBody.responseCode).toBe(400);
+        expect(responseBody.message).toBe('Bad request, search_product parameter is missing in POST request.')
+    })
+
     // // Verify response practice
     // test.step('This is the practice for API responce check after user clicks Submit button', async() => {
     //     const response = await checkoutPage.clickSubmitResponse();

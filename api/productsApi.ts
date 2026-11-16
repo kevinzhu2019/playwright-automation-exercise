@@ -32,4 +32,10 @@ export class ProductsApi {
         });
     }   
 
+    async postSearchProductsApiEmpty() {
+        return await this.request.post('https://automationexercise.com/api/searchProduct', {
+            form: {}
+        });
+    }
+
 }
