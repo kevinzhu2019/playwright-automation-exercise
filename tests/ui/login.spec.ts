@@ -16,4 +16,5 @@ test('Login with valid credentials', async ({ page }) => {
     await loginPage.gotoLoginPage();
     await loginPage.login(userData[0].email, userData[0].password);
     await expect(page).toHaveURL(/automationexercise.com/);
+    await expect(loginPage.loggedInAsText).toHaveText('Logged in as kkk');
 });

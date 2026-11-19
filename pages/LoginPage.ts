@@ -9,6 +9,7 @@ export class LoginPage {
     public readonly email: Locator;
     public readonly password: Locator;
     public readonly loginBtn: Locator;
+    public readonly loggedInAsText: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -18,6 +19,7 @@ export class LoginPage {
         this.email = page.locator("//input[@data-qa='login-email']");
         this.password = page.locator("//input[@data-qa='login-password']");
         this.loginBtn = page.locator("//button[@data-qa='login-button']");
+        this.loggedInAsText = page.locator("//ul[@class='nav navbar-nav']/li/a[contains(normalize-space(),'Logged in as kkk')]");
     }
 
     async open(): Promise<void> {
